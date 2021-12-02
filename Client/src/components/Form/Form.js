@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-// import FileBase from 'react-file-base64';
+import FileBase from 'react-file-base64';
 
 import useStyles from './Styles';
 import { createPost, updatePost } from '../../Redux/action/index';
@@ -59,7 +59,8 @@ const Form = ({ currentId, setCurrentId }) => {
         <TextField name="message" variant="outlined" label="Message" fullWidth multiline rows={4} value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })} />
          <div className={classes.fileInput}>
           <input name="file" type="file" onChange={handleImageUpload} /></div>
-          <input name="userFile" type="file" accept="application/pdf, application/vnd.ms-excel" value={postData.userFile} onChange={(e) => setPostData({ ...postData, userFile: e.target.value })} />
+          <div className={classes.fileInput}><FileBase type="file" accept="application/pdf, application/vnd.ms-excel" multiple={false} onDone={({ base64 }) => setPostData({ ...postData, userFile: base64 })} /></div>
+          {/* <input name="userFile" type="file" accept="application/pdf, application/vnd.ms-excel" value={postData.userFile} onChange={(e) => setPostData({ ...postData, userFile: e.target.value })} /> */}
         <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
         <Button variant="contained" color="secondary" size="small" onClick={clear} fullWidth>Clear</Button>
       </form>
