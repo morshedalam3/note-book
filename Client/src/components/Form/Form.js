@@ -8,7 +8,7 @@ import useStyles from './Styles';
 import { createPost, updatePost } from '../../Redux/action/index';
 
 const Form = ({ currentId, setCurrentId }) => {
-  const [postData, setPostData] = useState({ creator: '', title: '', message: '', selectedFile: '' });
+  const [postData, setPostData] = useState({ creator: '', title: '', message: '', selectedFile: '', userFile:'' });
   const post = useSelector((state) => (currentId ? state.posts.find((message) => message._id === currentId) : null));
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -19,7 +19,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
   const clear = () => {
     setCurrentId(0);
-    setPostData({ creator: '', title: '', message: '', selectedFile: '' });
+    setPostData({ creator: '', title: '', message: '', selectedFile: '', userFile:''  });
   };
 
   const handleSubmit = async (e) => {
@@ -59,6 +59,7 @@ const Form = ({ currentId, setCurrentId }) => {
         <TextField name="message" variant="outlined" label="Message" fullWidth multiline rows={4} value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })} />
          <div className={classes.fileInput}>
           <input name="file" type="file" onChange={handleImageUpload} /></div>
+          <input name="userFile" type="file" accept="application/pdf, application/vnd.ms-excel" value={postData.userFile} onChange={(e) => setPostData({ ...postData, userFile: e.target.value })} />
         <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
         <Button variant="contained" color="secondary" size="small" onClick={clear} fullWidth>Clear</Button>
       </form>
